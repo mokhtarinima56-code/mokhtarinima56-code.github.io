@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A futuristic neon terminal interface with glowing effects and dynamic animations for Nima Developer.">
+    <meta name="keywords" content="neon, terminal, developer, portfolio, futuristic, coding">
+    <meta name="author" content="Nima Developer">
+    <title>Nima | Neon Terminal</title>
+    <!-- Google Fonts: Orbitron (futuristic) + JetBrains Mono (code) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base */
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        html,body { min-height:100%; font-family:'JetBrains Mono',monospace; background:#0a0a0a; color:#e0e0e0; position:relative; overflow-x:hidden; overflow-y:auto; }
+
+        /* Background grid + neon overlay */
+        body {
+            display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+            background:
+                linear-gradient(135deg,rgba(10,10,10,0.95)25%,rgba(30,30,30,0.85)25%,rgba(30,30,30,0.85)50%,rgba(10,10,10,0.95)50%,rgba(10,10,10,0.95)75%,rgba(30,30,30,0.85)75%),
+                linear-gradient(45deg,rgba(0,102,255,0.15)25%,rgba(153,0,255,0.15)25%,rgba(153,0,255,0.15)50%,rgba(0,102,255,0.15)50%,rgba(0,102,255,0.15)75%,rgba(153,0,255,0.15)75%);
+            background-size:60px 60px,30px 30px; background-position:0 0,15px 15px;
+        }
+
+        /* Floating background text */
+        .background-text { position:absolute; font-size:22px; color:rgba(0,102,255,0.4); text-shadow:0 0 12px rgba(0,102,255,0.6),0 0 20px rgba(0,102,255,0.4); white-space:nowrap; pointer-events:none; z-index:1; animation:floatText 8s linear infinite; }
+        .background-text:nth-child(odd){ color:rgba(153,0,255,0.4); text-shadow:0 0 12px rgba(153,0,255,0.6),0 0 20px rgba(153,0,255,0.4); animation-direction:reverse; animation-duration:10s; }
+        @keyframes floatText{0%{transform:translateY(100vh) translateX(-150px);opacity:0}10%{opacity:.4}90%{opacity:.4}100%{transform:translateY(-150px) translateX(150px);opacity:0}}
+
+        /* Radial neon glow overlay */
+        body::before{ content:''; position:absolute; top:0; left:0; right:0; bottom:0;
+            background:radial-gradient(circle at 20% 20%,rgba(0,102,255,0.25),transparent 50%),
+                        radial-gradient(circle at 80% 80%,rgba(153,0,255,0.2),transparent 50%);
+            z-index:0; pointer-events:none; }
+
+        /* === NEW LOGO: Nima (complex, neon, readable) === */
+        .logo-container{ position:relative; top:30px; z-index:20; text-align:center; margin-bottom:40px; }
+
+        .logo-frame{
+            background:linear-gradient(145deg,rgba(15,15,25,0.9),rgba(35,35,55,0.7));
+            border:2px solid transparent; border-radius:50px; padding:18px 40px;
+            box-shadow:0 0 25px rgba(0,204,255,0.6),0 0 50px rgba(255,136,255,0.4),inset 0 0 20px rgba(0,0,0,0.5);
+            backdrop-filter:blur(12px); position:relative; overflow:hidden; transition:all .4s ease;
+        }
+        .logo-frame::before{
+            content:''; position:absolute; top:-2px; left:-2px; right:-2px; bottom:-2px;
+            background:linear-gradient(45deg,#00ccff,#ff88ff,#00ccff,#ff88ff);
+            border-radius:50px; z-index:-1; animation:borderGlow 3s linear infinite;
+        }
+        @keyframes borderGlow{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+        .logo-frame:hover{ transform:translateY(-8px) scale(1.03);
+            box-shadow:0 0 40px rgba(0,204,255,0.8),0 0 80px rgba(255,136,255,0.6); }
+
+        .logo-text{
+            font-family:'Orbitron',sans-serif; font-weight:900; font-size:42px; line-height:1;
+            position:relative; z-index:2; display:flex; align-items:center; justify-content:center;
+            gap:12px; letter-spacing:3px;
+            /* ---- Readable text colour + neon glow ---- */
+            color:#ffffff;                                   /* solid white base */
+            text-shadow:
+                0 0 8px rgba(0,204,255,0.9),                  /* bright cyan glow */
+                0 0 16px rgba(255,136,255,0.7),               /* magenta glow */
+                0 0 24px rgba(0,204,255,0.6);
+            animation:textPulse 2s ease-in-out infinite;
+        }
+        @keyframes textPulse{
+            0%,100%{ text-shadow:0 0 8px rgba(0,204,255,0.9),0 0 16px rgba(255,136,255,0.7),0 0 24px rgba(0,204,255,0.6); }
+            50%    { text-shadow:0 0 12px rgba(0,204,255,1),0 0 22px rgba(255,136,255,0.9),0 0 32px rgba(0,204,255,0.8); }
+        }
+
+        .logo-text::before{ content:'<'; color:#00ccff; font-size:38px; animation:blinkCaret 1.5s infinite; }
+        .logo-text::after { content:'/>'; color:#ff88ff; font-size:38px; animation:blinkCaret 1.5s infinite reverse; }
+        @keyframes blinkCaret{0%,100%{opacity:1}50%{opacity:.3}}
+
+        .logo-glow{
+            position:absolute; width:120px; height:120px;
+            background:radial-gradient(circle,rgba(0,204,255,0.4),transparent 70%);
+            border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); z-index:-1;
+            animation:glowPulse 3s ease-in-out infinite;
+        }
+        @keyframes glowPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}50%{transform:translate(-50%,-50%) scale(1.3);opacity:.9}}
+
+        /* === Terminal Window === */
+        .code-container{ position:relative; z-index:10; background:linear-gradient(145deg,#0a0a0a,#141414);
+            border:2px solid rgba(0,102,255,0.3); border-radius:15px;
+            box-shadow:0 0 30px rgba(0,102,255,0.4),0 0 50px rgba(153,0,255,0.2),inset 0 1px 0 rgba(255,255,255,0.05),inset 0 -1px 0 rgba(0,0,0,0.7);
+            max-width:850px; width:92%; backdrop-filter:blur(15px); margin:100px 0; transition:transform .3s ease; opacity:1; }
+        .code-container:hover{ transform:translateY(-5px);
+            box-shadow:0 0 40px rgba(0,102,255,0.6),0 0 60px rgba(153,0,255,0.4); }
+
+        .code-header{ background:linear-gradient(90deg,#0a0a0a,#1a1a1a); border-bottom:1px solid rgba(0,102,255,0.3);
+            padding:15px 25px; border-radius:13px 13px 0 0; display:flex; align-items:center; gap:12px; }
+        .window-controls{display:flex;gap:10px;}
+        .control-dot{width:14px;height:14px;border-radius:50%;background:#333; box-shadow:inset 0 1px 2px rgba(0,0,0,.5),0 0 10px rgba(255,255,255,.2);transition:transform .2s,box-shadow .2s;}
+        .control-dot:hover{transform:scale(1.2);}
+        .control-dot.red{background:linear-gradient(145deg,#ff5555,#cc0000);}
+        .control-dot.yellow{background:linear-gradient(145deg,#ffaa00,#cc8800);}
+        .control-dot.green{background:linear-gradient(145deg,#00ff88,#00cc66);}
+
+        .file-name{color:#888;font-size:15px;margin-left:auto;font-weight:600;text-shadow:0 0 5px rgba(0,102,255,0.3);}
+        .code-content{padding:30px;min-height:220px;}
+        .code-line{display:flex;align-items:center;margin-bottom:10px;font-size:17px;transition:color .3s;}
+        .code-line:hover .code-text{color:#00ccff;}
+        .line-number{color:#555;width:45px;text-align:right;margin-right:25px;user-select:none;}
+        .code-text{color:#e0e0e0;flex:1;text-shadow:0 0 5px rgba(0,102,255,0.3);}
+        .keyword{color:#00ccff;}.string{color:#ff88ff;}
+        .cursor{display:inline-block;width:2px;height:20px;background:#00ccff;animation:blink .8s infinite;margin-left:3px;box-shadow:0 0 10px #00ccff;}
+        @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+
+        .output-section{margin-top:25px;padding:20px;background:linear-gradient(145deg,#0a0a0a,#141414);
+            border:1px solid rgba(0,102,255,0.3);border-radius:10px;opacity:0;transform:translateY(15px);transition:all .6s;}
+        .output-section.show{opacity:1;transform:translateY(0);}
+        .output-label{color:#00ccff;font-size:13px;margin-bottom:10px;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,102,255,0.5);}
+        .output-text{color:#fff;font-size:20px;text-shadow:0 0 15px rgba(0,102,255,0.5);}
+
+        /* Floating particles */
+        .particle{position:absolute;width:2px;height:2px;background:#00ccff;border-radius:50%;
+            box-shadow:0 0 10px #00ccff,0 0 20px #ff88ff;animation:float-particle 20s linear infinite;opacity:.3;}
+        @keyframes float-particle{0%{transform:translateY(100vh) translateX(-50px) rotate(0deg);opacity:0}10%{opacity:.3}90%{opacity:.3}100%{transform:translateY(-100px) translateX(50px) rotate(720deg);opacity:0}}
+
+        /* === Content Boxes (transparent) === */
+        .about-container,.chart-container,.languages-container,.contact-container{
+            max-width:850px;width:92%;background:linear-gradient(145deg,rgba(10,10,10,0.7),rgba(20,20,20,0.6));
+            border:2px solid rgba(0,102,255,0.3);border-radius:15px;
+            box-shadow:0 0 30px rgba(0,102,255,0.4),0 0 50px rgba(153,0,255,0.2);
+            backdrop-filter:blur(10px);padding:30px;margin:20px 0;z-index:10;opacity:.85;text-align:center;
+        }
+        .about-title,.chart-title,.languages-title,.contact-title{
+            font-size:24px;color:#00ccff;text-shadow:0 0 12px rgba(0,102,255,0.8),0 0 20px rgba(0,102,255,0.5);
+            margin-bottom:20px;letter-spacing:1.5px;animation:neonPulse 2s ease-in-out infinite;
+        }
+        .languages-title,.contact-title{color:#ff88ff;}
+        @keyframes neonPulse{0%,100%{text-shadow:0 0 12px rgba(0,102,255,0.8),0 0 20px rgba(0,102,255,0.5)}50%{text-shadow:0 0 18px rgba(0,102,255,1),0 0 30px rgba(0,102,255,0.7)}}
+
+        canvas#skillsChart{max-width:400px;margin:0 auto;filter:drop-shadow(0 0 15px rgba(0,102,255,0.5));}
+
+        .languages-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:20px;justify-items:center;}
+        .language-item{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:16px;color:#e0e0e0;
+            text-shadow:0 0 5px rgba(0,102,255,0.3);transition:transform .3s;}
+        .language-item img{width:32px;height:32px;filter:drop-shadow(0 0 8px rgba(0,102,255,0.7));transition:transform .3s,filter .3s;}
+        .language-item:hover{transform:scale(1.1);}
+        .language-item:hover img{filter:drop-shadow(0 0 12px rgba(0,102,255,0.9));}
+
+        .contact-email{font-size:18px;color:#ff88ff;text-shadow:0 0 10px rgba(153,0,255,0.7);text-decoration:none;
+            transition:color .3s,text-shadow .3s;}
+        .contact-email:hover{color:#00ccff;text-shadow:0 0 15px rgba(0,102,255,0.9);}
+
+        /* Responsive */
+        @media(max-width:768px){
+            .code-container,.about-container,.chart-container,.languages-container,.contact-container{width:95%;margin:15px;}
+            .code-content{padding:20px 15px;}
+            .code-text{font-size:15px;}
+            .output-text{font-size:18px;}
+            .logo-text{font-size:28px;}
+            .logo-frame{padding:10px 25px;}
+            .background-text{font-size:18px;}
+            .about-title,.chart-title,.languages-title,.contact-title{font-size:20px;}
+            canvas#skillsChart{max-width:300px;}
+            .language-item img{width:28px;height:28px;}
+            .contact-email{font-size:16px;}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- New Nima Logo (readable text) -->
+    <div class="logo-container">
+        <div class="logo-frame">
+            <div class="logo-glow"></div>
+            <h1 class="logo-text">Nima</h1>
+        </div>
+    </div>
+
+    <!-- Terminal -->
+    <div class="code-container">
+        <div class="code-header">
+            <div class="window-controls">
+                <div class="control-dot red"></div>
+                <div class="control-dot yellow"></div>
+                <div class="control-dot green"></div>
+            </div>
+            <div class="file-name">main.py</div>
+        </div>
+        <div class="code-content">
+            <div class="code-line">
+                <span class="line-number">1</span>
+                <span class="code-text">
+                    <span class="keyword">print</span>(<span class="string">"<span id="typedText"></span><span class="cursor" id="cursor"></span>"</span>)
+                </span>
+            </div>
+            <div class="output-section" id="outputSection">
+                <div class="output-label">Output:</div>
+                <div class="output-text" id="outputText">Hello dear.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Me -->
+    <div class="about-container">
+        <h2 class="about-title">About Me</h2>
+        <p class="about-text">
+            I have been working in the field of intelligent technology development and feedback devices for several years. Recently, my interest has shifted toward feedback machines, and I am always eager to hear new ideas.
+        </p>
+    </div>
+
+    <!-- Skills Chart -->
+    <div class="chart-container">
+        <h2 class="chart-title">My Skills</h2>
+        <canvas id="skillsChart"></canvas>
+    </div>
+
+    <!-- Languages -->
+    <div class="languages-container">
+        <h2 class="languages-title">Languages I'm Proficient In</h2>
+        <div class="languages-grid">
+            <div class="language-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/python.svg" alt="Python"><span>Python</span></div>
+            <div class="language-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/css3.svg" alt="CSS"><span>CSS</span></div>
+            <div class="language-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/html5.svg" alt="HTML"><span>HTML</span></div>
+            <div class="language-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/javascript.svg" alt="JavaScript"><span>JavaScript</span></div>
+            <div class="language-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/csharp.svg" alt="C#"><span>C#</span></div>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="contact-container">
+        <h2 class="contact-title">Contact Me</h2>
+        <a href="mailto:nmokhtari901@gmail.com" class="contact-email">nmokhtari901@gmail.com</a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script>
+        // Config
+        const defaultConfig = { display_text: "Hello dear." };
+        let typingInterval, currentIndex = 0;
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles(); createBackgroundText(); startTyping(); createSkillsChart();
+        });
+
+        // Background text
+        function createBackgroundText(){
+            const texts = ["0101 CODE 1010","NIMA DEV","1010 0101","DEVELOPER","CODE RUNS","HACK THE FUTURE","0xDEADBEEF"];
+            for(let i=0;i<30;i++){
+                const el=document.createElement('div'); el.className='background-text';
+                el.textContent=texts[Math.floor(Math.random()*texts.length)];
+                el.style.left=Math.random()*100+'%'; el.style.top=Math.random()*100+'%';
+                el.style.animationDuration=(Math.random()*7+8)+'s'; el.style.animationDelay=Math.random()*5+'s';
+                document.body.appendChild(el);
+            }
+        }
+
+        // Particles
+        function createParticles(){
+            for(let i=0;i<50;i++){
+                const p=document.createElement('div'); p.className='particle';
+                p.style.left=Math.random()*100+'%';
+                p.style.animationDelay=Math.random()*20+'s';
+                p.style.animationDuration=(Math.random()*15+10)+'s';
+                document.body.appendChild(p);
+            }
+        }
+
+        // Typing effect
+        function startTyping(){
+            const text=defaultConfig.display_text;
+            const typed=document.getElementById('typedText');
+            const cursor=document.getElementById('cursor');
+            const output=document.getElementById('outputSection');
+            currentIndex=0; typed.textContent=''; output.classList.remove('show');
+            typingInterval=setInterval(()=>{
+                if(currentIndex<text.length){ typed.textContent+=text[currentIndex++]; }
+                else{ clearInterval(typingInterval); cursor.style.display='none';
+                      setTimeout(()=>{ output.classList.add('show'); cursor.style.display='inline-block'; },800);
+                }
+            },120);
+        }
+
+        // Skills chart
+        function createSkillsChart(){
+            const ctx=document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctx,{
+                type:'pie',
+                data:{ labels:['Python','CSS','HTML','JavaScript','C#'],
+                       datasets:[{ data:[65,11,13,11,11],
+                                   backgroundColor:['rgba(0,204,255,0.8)','rgba(0,255,136,0.8)','rgba(255,85,85,0.8)','rgba(255,170,0,0.8)','rgba(204,0,204,0.8)'],
+                                   borderColor:'#0a0a0a', borderWidth:2, hoverBorderColor:'#00ccff', hoverBorderWidth:4 }]
+                     },
+                options:{ responsive:true, plugins:{legend:{display:false}},
+                          animation:{animateRotate:true,animateScale:true} }
+            });
+        }
+    </script>
+</body>
+</html>
